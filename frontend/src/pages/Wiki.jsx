@@ -1,108 +1,302 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { Search, Book, Map, Wrench, Crown, Pickaxe, Home } from "lucide-react";
+import { Separator } from "../components/ui/separator";
+import { Search, Book, ChevronRight } from "lucide-react";
 
 const Wiki = () => {
+  const [activeSection, setActiveSection] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   const wikiSections = [
     {
-      id: "getting-started",
       title: "Getting Started",
-      icon: Home,
-      color: "text-green-400",
-      bgColor: "bg-green-950/30",
       articles: [
         {
           title: "How to Join the Server",
-          description: "Step-by-step guide to connecting to AzureCraft Server",
-          content: "To join AzureCraft Server, simply add 'play.azurecraft.com' to your server list in Minecraft. Make sure you're using the correct version (Java Edition 1.20+)."
+          content: `To join AzureCraft Server, follow these simple steps:
+
+1. Open your Minecraft Java Edition launcher
+2. Make sure you're running version 1.20 or higher
+3. Click "Multiplayer" from the main menu
+4. Click "Add Server" or "Direct Connect"
+5. Enter the server IP: play.azurecraft.com
+6. Click "Join Server"
+
+If you experience any connection issues, make sure your firewall isn't blocking Minecraft and that you have a stable internet connection.`
         },
         {
           title: "Spawn Area Guide",
-          description: "Everything you need to know about the spawn area",
-          content: "The spawn area contains shops, information boards, and teleportation hubs. Use /spawn to return here anytime."
+          content: `The spawn area is your gateway to the AzureCraft experience:
+
+**Key Locations:**
+• Information boards with server rules and updates
+• Teleportation hub with warps to different worlds
+• Shops for buying essential items and tools
+• Community bulletin board for events
+
+**Important Commands:**
+• /spawn - Return to spawn anytime
+• /help - Get list of available commands
+• /rules - Read server rules
+
+The spawn area is a safe zone where PvP is disabled and griefing is not allowed.`
         },
         {
           title: "Basic Commands",
-          description: "Essential commands every player should know",
-          content: "Key commands: /spawn, /home, /sethome, /tpa [player], /help, /rules, /discord"
+          content: `Essential commands every player should know:
+
+**Navigation:**
+• /spawn - Teleport to spawn area
+• /home - Teleport to your home
+• /sethome [name] - Set a home location
+• /delhome [name] - Delete a home location
+• /tpa [player] - Request teleport to another player
+• /tpaccept - Accept teleport request
+
+**Communication:**
+• /msg [player] [message] - Send private message
+• /r [message] - Reply to last message
+• /discord - Get Discord server link
+
+**Utility:**
+• /balance - Check your money
+• /time - Check server time
+• /help - Get command help`
         }
       ]
     },
     {
-      id: "gameplay",
       title: "Gameplay Features",
-      icon: Pickaxe,
-      color: "text-blue-400",
-      bgColor: "bg-blue-950/30",
       articles: [
         {
           title: "Land Claims System",
-          description: "How to protect your builds and items",
-          content: "Use a golden shovel to claim land. Right-click two corners to create a claim. Use /abandonclaim to remove claims you no longer need."
+          content: `Protect your builds with our land claiming system:
+
+**How to Claim Land:**
+1. Get a golden shovel (given to new players or craft one)
+2. Right-click one corner of the area you want to claim
+3. Right-click the opposite corner to complete the claim
+4. A visualization will show your claimed area
+
+**Claim Management:**
+• /trust [player] - Allow a player to build in your claim
+• /untrust [player] - Remove building permissions
+• /abandonclaim - Remove the claim you're standing in
+• /claimlist - See all your claims
+
+**Claim Limits:**
+• New players: 200 blocks per hour of playtime
+• Trusted players: 500 blocks per hour
+• Donators get bonus claim blocks`
         },
         {
           title: "Economy System",
-          description: "Earning and spending money on the server",
-          content: "Earn money through jobs, selling items at spawn shops, or trading with other players. Use /balance to check your money."
+          content: `Make money and trade with other players:
+
+**Earning Money:**
+• Jobs: /jobs browse - See available jobs
+• Player shops: Sell items to other players
+• Daily rewards: /daily - Claim daily bonuses
+• Voting rewards: Vote for the server for money
+
+**Spending Money:**
+• Admin shops at spawn
+• Player-run markets
+• Claim blocks: /buyclaimblocks
+• Special perks and items
+
+**Trading:**
+• Use /trade [player] for secure trading
+• Player shops for automated selling
+• Auction house: /ah for server-wide trading
+
+Current exchange rate: 1 diamond = $100`
         },
         {
           title: "Player Shops",
-          description: "Creating and managing your own shop",
-          content: "Set up chest shops to sell items to other players. Place a sign on a chest with [SHOP] format to create automated trading."
+          content: `Create your own shop to sell items:
+
+**Setting Up a Chest Shop:**
+1. Place a chest and fill it with items to sell
+2. Place a sign on or near the chest
+3. Write on the sign:
+   Line 1: [SHOP]
+   Line 2: Amount to sell (e.g., 1)
+   Line 3: Price (e.g., B 10:5 S) - Buy 10, Sell 5
+   Line 4: Item name (e.g., DIAMOND)
+
+**Shop Management:**
+• Check shop profits regularly
+• Keep chests stocked
+• Adjust prices based on demand
+• Use /shopstats to see sales data
+
+**Shop Rules:**
+• No scam shops with misleading signs
+• Keep prices reasonable
+• Remove inactive shops after 30 days`
         }
       ]
     },
     {
-      id: "worlds",
       title: "Server Worlds",
-      icon: Map,
-      color: "text-purple-400",
-      bgColor: "bg-purple-950/30",
       articles: [
         {
           title: "Main Survival World",
-          description: "The primary world where most gameplay happens",
-          content: "The main survival world has a 10,000 block border. Build freely, but remember to claim your land to protect it."
+          content: `The primary world for survival gameplay:
+
+**World Details:**
+• Size: 10,000 x 10,000 blocks from spawn
+• Difficulty: Hard mode
+• PvP: Enabled outside spawn (3000 block radius)
+• Griefing: Not allowed, use land claims
+
+**Resources:**
+• All vanilla structures and biomes
+• Custom ore generation for balanced economy
+• Rare materials available in designated mining world
+• Mob spawners protected by land claims
+
+**Building Guidelines:**
+• Claim your land before building
+• No inappropriate or offensive structures
+• Respect other players' builds
+• Use /rtp for random teleport to find building spots
+
+The world border expands occasionally based on server population.`
         },
         {
           title: "Nether Access",
-          description: "How to access and navigate the Nether",
-          content: "Nether portals work normally. The Nether world is also protected by the same claiming system as the overworld."
+          content: `Navigate the dangerous Nether dimension:
+
+**Nether Features:**
+• Same 10,000 x 10,000 border as overworld
+• Normal nether portal mechanics
+• Land claims work in the Nether
+• Enhanced loot in Nether fortresses
+
+**Safety Tips:**
+• Always carry fire resistance potions
+• Build secure pathways to avoid ghasts
+• Mark your portal coordinates
+• Travel in groups for added security
+
+**Resources:**
+• Blaze spawners for XP farming
+• Wither skeleton heads for beacons
+• Nether quartz for building
+• Glowstone for lighting
+
+**PvP:** Enabled everywhere in the Nether - be cautious!`
         },
         {
           title: "End World",
-          description: "Information about the End dimension",
-          content: "The End is accessible through the End Portal. The Ender Dragon respawns weekly for all players to challenge."
+          content: `Challenge the Ender Dragon and explore End Cities:
+
+**End Access:**
+• End portal located at spawn coordinates
+• Additional End portals in strongholds
+• /end command for trusted players
+
+**Dragon Fight:**
+• Ender Dragon respawns every Sunday at 8 PM EST
+• All players can participate
+• Rewards distributed to all participants
+• Dragon egg goes to player with most damage
+
+**End Cities:**
+• Accessible after dragon defeat
+• Contains shulker shells and elytra
+• Use /rtp in End for random teleport
+• Claim land to protect your End base
+
+**Important:** The End resets monthly to ensure fresh resources for all players.`
         }
       ]
     },
     {
-      id: "staff",
       title: "Staff & Support",
-      icon: Crown,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-950/30",
       articles: [
         {
           title: "Staff Team",
-          description: "Meet our dedicated staff members",
-          content: "Our staff team includes Administrators, Moderators, and Helpers. They're here to assist players and maintain server quality."
+          content: `Meet our dedicated team of staff members:
+
+**Staff Hierarchy:**
+• **Owner** - Server owner and final decision maker
+• **Admin** - Full server permissions, handles major issues
+• **Moderator** - Chat moderation, player disputes, rule enforcement
+• **Helper** - Assists new players, answers questions
+
+**Current Staff Members:**
+• Owner: ServerOwner
+• Admins: AdminBob, AdminAlice
+• Moderators: ModJohn, ModSarah, ModMike
+• Helpers: HelperTom, HelperJenny
+
+**Staff Guidelines:**
+• Fair and unbiased treatment of all players
+• Following proper punishment procedures
+• Available during peak hours (3 PM - 11 PM EST)
+• Always professional and helpful
+
+Staff members are marked with colored names and prefixes in chat.`
         },
         {
           title: "Reporting Issues",
-          description: "How to report problems or rule violations",
-          content: "Use /report [player] [reason] in-game or contact staff through Discord. Include screenshots or evidence when possible."
+          content: `How to report problems or rule violations:
+
+**In-Game Reporting:**
+• /report [player] [reason] - Report rule violations
+• /helpop [message] - Request staff assistance
+• Take screenshots of evidence when possible
+
+**Discord Reporting:**
+• Use #report-players channel
+• Include player name, time, and evidence
+• Staff will investigate within 24 hours
+
+**What to Report:**
+• Cheating or hacking
+• Harassment or inappropriate behavior
+• Griefing outside of PvP zones
+• Advertising other servers
+• Real money trading
+
+**False Reports:**
+• Don't abuse the report system
+• False reports may result in punishment
+• Be honest and provide accurate information`
         },
         {
           title: "Appeals Process",
-          description: "How to appeal bans or punishments",
-          content: "Submit ban appeals through our Discord server. Include your username, reason for ban, and why you believe it should be lifted."
+          content: `How to appeal bans or punishments:
+
+**Appeal Requirements:**
+• Wait at least 24 hours before appealing
+• Be honest about what happened
+• Show understanding of the rules
+• Explain why you should be unbanned
+
+**Appeal Process:**
+1. Join our Discord server
+2. Go to #ban-appeals channel
+3. Use the provided template
+4. Wait for staff review (3-5 days)
+5. Accept or contest the decision
+
+**Appeal Template:**
+• IGN (In-Game Name):
+• Ban reason:
+• What happened:
+• Why you should be unbanned:
+• Will you follow rules in future:
+
+**Important Notes:**
+• Appeals for serious offenses (major hacking, harassment) may be denied
+• Repeated offenses reduce chances of successful appeal
+• Be patient - staff reviews all appeals carefully`
         }
       ]
     }
@@ -112,141 +306,182 @@ const Wiki = () => {
     ...section,
     articles: section.articles.filter(article =>
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.description.toLowerCase().includes(searchTerm.toLowerCase())
+      article.content.toLowerCase().includes(searchTerm.toLowerCase())
     )
-  })).filter(section => section.articles.length > 0 || searchTerm === "");
+  }));
+
+  const currentSection = filteredSections[activeSection];
 
   return (
-    <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 border-blue-500/30 text-blue-400 bg-blue-950/30">
-            Knowledge Base
-          </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            AzureCraft Wiki
-          </h1>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Your comprehensive guide to everything AzureCraft Server. Find tutorials, guides, and helpful information to enhance your gameplay experience.
-          </p>
+    <div className="min-h-screen bg-slate-950">
+      {/* Header */}
+      <div className="bg-slate-900/80 border-b border-slate-800 py-8">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <Badge variant="outline" className="mb-4 border-blue-500/30 text-blue-400 bg-blue-950/30">
+              Knowledge Base
+            </Badge>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              AzureCraft Wiki
+            </h1>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              Complete documentation and guides for AzureCraft Server
+            </p>
+          </div>
         </div>
+      </div>
 
-        {/* Search */}
-        <div className="relative mb-8">
-          <div className="flex items-center space-x-2 bg-slate-900/50 border border-blue-800/30 rounded-lg p-3">
-            <Search className="w-5 h-5 text-slate-400" />
+      {/* Search Bar */}
+      <div className="bg-slate-900/60 border-b border-slate-800 py-4">
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input
               type="text"
-              placeholder="Search the wiki..."
+              placeholder="Search documentation..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border-0 bg-transparent focus:ring-0 text-slate-300 placeholder:text-slate-500"
+              className="pl-10 bg-slate-800/50 border-slate-700 focus:border-blue-500 text-slate-200"
             />
           </div>
         </div>
+      </div>
 
-        {/* Wiki Content */}
-        <Tabs defaultValue="getting-started" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-slate-900/50 border border-blue-800/30">
-            {wikiSections.map((section) => {
-              const IconComponent = section.icon;
-              return (
-                <TabsTrigger
-                  key={section.id}
-                  value={section.id}
-                  className="flex items-center space-x-2 text-slate-300 data-[state=active]:bg-blue-950/30 data-[state=active]:text-blue-400"
-                >
-                  <IconComponent className="w-4 h-4" />
-                  <span className="hidden sm:inline">{section.title}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-
-          {filteredSections.map((section) => {
-            const IconComponent = section.icon;
-            return (
-              <TabsContent key={section.id} value={section.id} className="space-y-6">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className={`p-3 rounded-lg ${section.bgColor}`}>
-                    <IconComponent className={`w-6 h-6 ${section.color}`} />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">{section.title}</h2>
-                    <p className="text-slate-400">Essential information and guides</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {section.articles.map((article, index) => (
-                    <Card key={index} className="bg-slate-900/50 border-blue-800/30 hover:bg-slate-900/70 transition-all duration-300 hover:transform hover:scale-[1.02]">
-                      <CardHeader>
-                        <CardTitle className="text-white text-lg">{article.title}</CardTitle>
-                        <CardDescription className="text-slate-400">
-                          {article.description}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                          {article.content}
-                        </p>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="border-blue-500/30 text-blue-400 hover:bg-blue-950/30"
-                        >
-                          <Book className="w-4 h-4 mr-2" />
-                          Read More
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-
-                {section.articles.length === 0 && searchTerm && (
-                  <div className="text-center py-12">
-                    <div className="text-slate-400 mb-4">No articles found matching "{searchTerm}"</div>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setSearchTerm("")}
-                      className="border-blue-500/30 text-blue-400 hover:bg-blue-950/30"
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex gap-8">
+          {/* Left Sidebar - Numbered Navigation */}
+          <div className="w-80 flex-shrink-0">
+            <div className="sticky top-8">
+              <div className="bg-slate-900/80 rounded-lg border border-slate-800 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                  <Book className="w-5 h-5 mr-2 text-blue-400" />
+                  Documentation
+                </h3>
+                <nav className="space-y-2">
+                  {filteredSections.map((section, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveSection(index)}
+                      className={`w-full flex items-center text-left p-3 rounded-lg transition-all duration-200 ${
+                        activeSection === index
+                          ? 'bg-blue-950/50 text-blue-400 border border-blue-500/30'
+                          : 'hover:bg-slate-800/50 text-slate-300 hover:text-white'
+                      }`}
                     >
-                      Clear Search
-                    </Button>
-                  </div>
-                )}
-              </TabsContent>
-            );
-          })}
-        </Tabs>
+                      <div className={`flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-semibold ${
+                        activeSection === index
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-slate-700 text-slate-400'
+                      }`}>
+                        {index + 1}
+                      </div>
+                      <span className="font-medium">{section.title}</span>
+                      {activeSection === index && (
+                        <ChevronRight className="w-4 h-4 ml-auto" />
+                      )}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </div>
 
-        {/* Help Section */}
-        <Card className="mt-12 bg-slate-900/50 border-blue-500/30">
-          <CardHeader>
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-blue-950/30">
-                <Wrench className="w-5 h-5 text-blue-400" />
-              </div>
-              <div>
-                <CardTitle className="text-white">Need More Help?</CardTitle>
-                <CardDescription className="text-slate-400">
-                  Can't find what you're looking for?
-                </CardDescription>
+          {/* Right Content Area */}
+          <div className="flex-1">
+            <div className="bg-slate-900/80 rounded-lg border border-slate-800 p-8">
+              {currentSection && (
+                <>
+                  <div className="mb-8">
+                    <div className="flex items-center mb-4">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white text-lg font-bold mr-4">
+                        {activeSection + 1}
+                      </div>
+                      <h2 className="text-3xl font-bold text-white">{currentSection.title}</h2>
+                    </div>
+                    <p className="text-slate-400">
+                      {currentSection.articles.length} article{currentSection.articles.length !== 1 ? 's' : ''} in this section
+                    </p>
+                  </div>
+
+                  <div className="space-y-8">
+                    {currentSection.articles.map((article, index) => (
+                      <div key={index} className="border border-slate-700 rounded-lg p-6 bg-slate-800/30">
+                        <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                          <div className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm flex items-center justify-center mr-3">
+                            {index + 1}
+                          </div>
+                          {article.title}
+                        </h3>
+                        <div className="prose prose-invert prose-blue max-w-none">
+                          {article.content.split('\n').map((paragraph, pIndex) => {
+                            if (paragraph.trim() === '') return <br key={pIndex} />;
+                            
+                            if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+                              return (
+                                <h4 key={pIndex} className="text-lg font-semibold text-blue-400 mt-6 mb-3">
+                                  {paragraph.replace(/\*\*/g, '')}
+                                </h4>
+                              );
+                            }
+                            
+                            if (paragraph.startsWith('• ')) {
+                              return (
+                                <div key={pIndex} className="text-slate-300 ml-4 mb-2 flex items-start">
+                                  <span className="text-blue-400 mr-2">•</span>
+                                  <span>{paragraph.substring(2)}</span>
+                                </div>
+                              );
+                            }
+                            
+                            return (
+                              <p key={pIndex} className="text-slate-300 leading-relaxed mb-4">
+                                {paragraph}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {currentSection.articles.length === 0 && searchTerm && (
+                    <div className="text-center py-12">
+                      <div className="text-slate-400 mb-4">No articles found matching "{searchTerm}"</div>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setSearchTerm("")}
+                        className="border-blue-500/30 text-blue-400 hover:bg-blue-950/30"
+                      >
+                        Clear Search
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Bottom Help Section */}
+            <div className="mt-8 bg-slate-900/80 rounded-lg border border-slate-800 p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Need Additional Help?</h3>
+                  <p className="text-slate-400">
+                    Can't find what you're looking for? Our staff team is here to help.
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Join Discord
+                  </Button>
+                  <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+                    Contact Staff
+                  </Button>
+                </div>
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                Join Discord Support
-              </Button>
-              <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-950/30">
-                Contact Staff In-Game
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
