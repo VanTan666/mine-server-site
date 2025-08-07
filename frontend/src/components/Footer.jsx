@@ -1,6 +1,6 @@
 import React from "react";
 import { Separator } from "./ui/separator";
-import { Github, Twitter, Youtube, Discord } from "lucide-react";
+import { Github, Twitter, Youtube, MessageCircle } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
