@@ -4,7 +4,7 @@ import { Github, Twitter, Youtube, MessageCircle } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
-    { name: "Discord", icon: Discord, url: "#", color: "hover:text-indigo-400" },
+    { name: "Discord", icon: MessageCircle, url: "#", color: "hover:text-indigo-400" },
     { name: "Twitter", icon: Twitter, url: "#", color: "hover:text-blue-400" },
     { name: "YouTube", icon: Youtube, url: "#", color: "hover:text-red-400" },
     { name: "GitHub", icon: Github, url: "#", color: "hover:text-slate-300" },
